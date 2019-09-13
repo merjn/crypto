@@ -36,17 +36,19 @@ var LetterFrequency = map[rune]float64{
 
 func FindBestScore(input []byte) score {
 	var bestScore score
-	for letter := 0; letter <= 255; letter++ {
+	for l := 0; l <= 255; l++ {
+		letter := byte(l)
+
 		var result []byte
 		for _, i := range input {
-			xored := i ^ byte(letter)
+			xored := i ^ letter
 			result = append(result, xored)
 		}
 
 		s := Score(string(result))
 
 		if bestScore.Total < s {
-			bestScore = score{Letter: byte(letter), Total: s}
+			bestScore = score{Letter: letter, Total: s}
 		}
 
 	}

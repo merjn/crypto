@@ -10,15 +10,15 @@ func DecodeHex(input string, key byte) (string, error) {
 		return "", err
 	}
 
-	return Decode(string(decoded), key), nil
+	return string(Decode(string(decoded), key)), nil
 }
 
 // Decode iterates over input as a sequence of bytes and stores the decoded value to result.
-func Decode(input string, key byte) string {
+func Decode(input string, key byte) []byte {
 	var result []byte
 	for _, in := range []byte(input) {
 		result = append(result, in^key)
 	}
 
-	return string(result)
+	return result
 }

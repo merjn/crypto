@@ -14,7 +14,6 @@ func TestFindBestScore(t *testing.T) {
 	if string(score.Letter) != "X" {
 		t.Error("invalid key")
 	}
-
 }
 
 func TestScore(t *testing.T) {

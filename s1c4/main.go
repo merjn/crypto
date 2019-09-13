@@ -9,19 +9,16 @@ import "fmt"
 import "strings"
 
 type Winner struct {
-	Sentence string
+	Sentence  []byte
 	Character byte
-	Score float64
+	Score     float64
 }
 
-// main iterates over file.txt and calls the decoder package to
-// check which line has been encoded by single byte xor.
 func main() {
 	in, err := ioutil.ReadFile("file.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
-
 
 	lines := strings.Split(string(in), "\r\n")
 	var winner Winner
@@ -37,13 +34,12 @@ func main() {
 			log.Fatalln(err)
 		}
 
-
 		if score.Score > winner.Score {
-			winner = Winner { Sentence: string(decoded), Character: score.Character, Score: score.Score }
+			winner = Winner{Sentence: decoded, Character: score.Character, Score: score.Score}
 		}
 	}
 
 	fmt.Println(winner.Character)
 	fmt.Println(winner.Sentence)
-	fmt.Println(decoder.Decode(winner.Sentence, winner.Character))
+	fmt.Println(string(decoder.Decode(string(winner.Sentence), winner.Character)))
 }

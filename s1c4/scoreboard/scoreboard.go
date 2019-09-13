@@ -4,10 +4,11 @@ import "cryptopals/decoder"
 
 type Score struct {
 	Character byte
-	Result string
-	Score float64
+	Result    string
+	Score     float64
 }
 
+// LetterFrequency contains the letter frequency of every letter in the alphabet.
 var LetterFrequency = map[rune]float64{
 	'a': 8.167,
 	'b': 1.492,
@@ -38,15 +39,13 @@ var LetterFrequency = map[rune]float64{
 	' ': 13.000,
 }
 
-
 func FindBestScore(input []byte) (Score, error) {
 	var topScore Score
 	for i := 0; i < 256; i++ {
 		character := byte(i)
 
 		var score float64
-		result := decoder.Decode(string(input), character)
-
+		result := string(decoder.Decode(string(input), character))
 
 		for _, res := range result {
 			frequency, ok := LetterFrequency[res]
@@ -56,7 +55,7 @@ func FindBestScore(input []byte) (Score, error) {
 		}
 
 		if score > topScore.Score {
-			topScore = Score { Character: character, Score: score, Result: result }
+			topScore = Score{Character: character, Score: score, Result: result}
 		}
 	}
 

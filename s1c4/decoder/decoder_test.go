@@ -4,9 +4,9 @@ import "testing"
 import "cryptopals/decoder"
 import "strings"
 
-var(
+var (
 	expected = "Cooking MC's like a pound of bacon"
- 	key = byte('X')
+	key      = byte('X')
 )
 
 func TestHexDecode(t *testing.T) {
@@ -23,7 +23,7 @@ func TestHexDecode(t *testing.T) {
 }
 
 func TestDecode(t *testing.T) {
-	input := []byte{27,55,55,51,49,54,63,120,21,27,127,43,120,52,49,51,61,120,57,120,40,55,45,54,60,120,55,62,120,58,57,59,55,54}
+	input := []byte{27, 55, 55, 51, 49, 54, 63, 120, 21, 27, 127, 43, 120, 52, 49, 51, 61, 120, 57, 120, 40, 55, 45, 54, 60, 120, 55, 62, 120, 58, 57, 59, 55, 54}
 	output := decoder.Decode(string(input), key)
 
 	if !strings.EqualFold(expected, output) {

@@ -10,7 +10,7 @@ func TestFindBestScore(t *testing.T) {
 	decoded, err := hex.DecodeString(input)
 	if err != nil {
 		t.Fatal(err) // sanity check
-	} 
+	}
 
 	score, err := scoreboard.FindBestScore(decoded)
 	if err != nil {
