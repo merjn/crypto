@@ -1,27 +1,49 @@
 package main
 
-import "fmt"
+import "cryptopals/scoreboard"
+import "encoding/hex"
 import "io/ioutil"
 import "log"
-import "bytes"
-import "encoding/hex"
+import "cryptopals/decoder"
+import "fmt"
+import "strings"
+
+type Winner struct {
+	Sentence string
+	Character byte
+	Score float64
+}
 
 // main iterates over file.txt and calls the decoder package to
 // check which line has been encoded by single byte xor.
 func main() {
-	out, err := ioutil.ReadFile("file.txt")
+	in, err := ioutil.ReadFile("file.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	separator := []byte("\n")
-	lines := bytes.Split(out, separator)
+
+	lines := strings.Split(string(in), "\r\n")
+	var winner Winner
+
 	for _, line := range lines {
-		decoded := hex.EncodeToString(line)
+		decoded, err := hex.DecodeString(strings.TrimSpace(line))
 		if err != nil {
-			log.Fatal(err)
+			log.Fatalln(err)
 		}
 
-		fmt.Println(decoded)
+		score, err := scoreboard.FindBestScore(decoded)
+		if err != nil {
+			log.Fatalln(err)
+		}
+
+
+		if score.Score > winner.Score {
+			winner = Winner { Sentence: string(decoded), Character: score.Character, Score: score.Score }
+		}
 	}
+
+	fmt.Println(winner.Character)
+	fmt.Println(winner.Sentence)
+	fmt.Println(decoder.Decode(winner.Sentence, winner.Character))
 }
